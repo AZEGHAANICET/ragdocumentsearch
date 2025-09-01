@@ -8,5 +8,6 @@ python-dotenv
 beautifulsoup4
 requests
 streamlit
+pypdf
 wikipedia
 python-dotenv

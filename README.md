@@ -118,19 +118,19 @@ Le LLM est instancié via LangChain `init_chat_model` et récupère la clé depu
 
 ```mermaid
 flowchart TB
-    A[UI Streamlit (streamlit_app.py)] --> B[Init LLM & Config (Config.get_llm())]
-    A --> C[Initialize RAG (initialize_rag())]
-    C --> D[Ingestion (DocumentProcessor.process_url(URLs))]
-    D --> E[Split en chunks (RecursiveCharacterTextSplitter)]
-    E --> F[Vectorisation (OpenAIEmbeddings)]
-    F --> G[Indexation FAISS (VectorStore.create_retriever)]
-    G --> H[Build Graph (GraphBuilder.build())]
-    H --> I[StateGraph(RAGState) (Nodes: retriever → responder)]
+    A[UI Streamlit : streamlit_app.py] --> B[Init LLM & Config : Config.get_llm()]
+    A --> C[Initialize RAG : initialize_rag()]
+    C --> D[Ingestion : DocumentProcessor.process_url(URLs)]
+    D --> E[Split en chunks : RecursiveCharacterTextSplitter]
+    E --> F[Vectorisation : OpenAIEmbeddings]
+    F --> G[Indexation FAISS : VectorStore.create_retriever]
+    G --> H[Build Graph : GraphBuilder.build()]
+    H --> I[StateGraph RAGState : Nodes retriever -> responder]
 
     subgraph Query Flow
-        J[Question utilisateur] --> K[Retriever.invoke(query) (FAISS)]
+        J[Question utilisateur] --> K[Retriever.invoke(query) : FAISS]
         K --> L[Concat contexte]
-        L --> M[LLM.invoke(prompt) (Answer)]
+        L --> M[LLM.invoke(prompt) : Answer]
         M --> N[Résultat + docs sources]
     end
 
@@ -145,21 +145,21 @@ flowchart TB
 ```mermaid
 flowchart TB
     subgraph Ingestion
-        DP[DocumentProcessor (load_from_url / pdf_dir / text) (split_documents)]
+        DP[DocumentProcessor : load_from_url / pdf_dir / text : split_documents]
     end
 
     subgraph VectorStore
-        VS[VectorStore (OpenAIEmbeddings + FAISS) (.as_retriever())]
+        VS[VectorStore : OpenAIEmbeddings + FAISS : as_retriever()]
     end
 
     subgraph Workflow
-        GB[GraphBuilder (StateGraph<RAGState>)]
-        RN[RAGNode (retriever_docs / generate_answer)]
-        RS[RAGState (query, retrieved_docs, answer)]
+        GB[GraphBuilder : StateGraph<RAGState>]
+        RN[RAGNode : retriever_docs / generate_answer]
+        RS[RAGState : query, retrieved_docs, answer]
     end
 
     subgraph UI
-        ST[Streamlit App (initialize_rag, forms, history)]
+        ST[Streamlit App : initialize_rag, forms, history]
     end
 
     ST --> DP

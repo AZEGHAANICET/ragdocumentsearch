@@ -211,7 +211,7 @@ flowchart TB
 ---
 
 ## 📄 Licence
-MIT (adapter si besoin)
+MIT 
 
 ---
 

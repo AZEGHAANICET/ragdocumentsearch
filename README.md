@@ -1,24 +1,53 @@
-# RagDocumentSearch — RAG minimaliste, élégant et efficace
+<div align="center">
 
-Un moteur de recherche de documents basé sur RAG (Retrieval Augmented Generation) avec une UI Streamlit. Le système ingère des pages web et des PDF locaux, indexe les chunks dans FAISS, puis orchestre un workflow LangGraph pour récupérer le contexte pertinent et générer une réponse via un LLM OpenAI.
+# 🔎✨ RagDocumentSearch — RAG minimaliste, élégant et efficace
 
-> Points forts
-- Simplicité d’architecture et code lisible
-- Ingestion URL et dossier `data/` (PDF)
-- Vectorisation FAISS + OpenAI Embeddings
-- Orchestration via LangGraph (nœuds Retrieve → Respond)
-- UI Streamlit ergonomique et réactive
+[![Streamlit](https://img.shields.io/badge/UI-Streamlit-FF4B4B?logo=streamlit&logoColor=white)](https://streamlit.io)
+[![LangChain](https://img.shields.io/badge/AI-LangChain-2B5F9E)](https://python.langchain.com/)
+[![LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-0A84FF)](https://langchain-ai.github.io/langgraph/)
+[![FAISS](https://img.shields.io/badge/Vector_DB-FAISS-12A389)](https://github.com/facebookresearch/faiss)
+[![OpenAI](https://img.shields.io/badge/LLM-OpenAI-412991?logo=openai&logoColor=white)](https://platform.openai.com/)
+
+<p>
+  <img src="https://media.tenor.com/ZfGJd9q3Kk0AAAAC/anime-computer.gif" alt="anime computer" width="520"/>
+</p>
+
+</div>
+
+> **Un moteur de recherche de documents RAG** avec une UI Streamlit. Il ingère des pages web et des PDF locaux, indexe les chunks dans FAISS, puis orchestre un workflow LangGraph pour récupérer le contexte pertinent et générer une réponse via un LLM OpenAI.
+
+- ✅ **Simplicité** d’architecture et code lisible
+- 🌐 **Ingestion** URL et dossier `data/` (PDF)
+- 🧭 **Retrieval** FAISS + OpenAI Embeddings
+- 🧩 **Workflow** LangGraph (nœuds Retrieve → Respond)
+- 🖥️ **UI** Streamlit ergonomique et réactive
 
 ---
 
-## Prérequis
+## 🗂️ Sommaire
+- [Prérequis](#-prérequis)
+- [Installation (Windows/PowerShell)](#-installation-windowspowershell)
+- [Lancer l’application](#-lancer-lapplication)
+- [Structure du projet](#-structure-du-projet)
+- [Configuration](#-configuration)
+- [Flux de bout en bout (Mermaid)](#-flux-de-bout-en-bout-mermaid-vertical)
+- [Architecture des composants (Mermaid)](#-architecture-des-composants-mermaid-vertical)
+- [Détails techniques](#-détails-techniques)
+- [Personnaliser les sources](#-personnaliser-les-sources)
+- [Conseils qualité & performance](#-conseils-qualité--performance)
+- [Dépannage rapide](#-dépannage-rapide)
+- [Licence](#-licence)
+
+---
+
+## 🔧 Prérequis
 - **Python** 3.10+
 - **Clé API OpenAI** dans `OPENAI_API_KEY`
 - **Windows PowerShell** (les commandes fonctionnent aussi sur macOS/Linux)
 
 ---
 
-## Installation (Windows/PowerShell)
+## 🚀 Installation (Windows/PowerShell)
 
 ```powershell
 # 1) Cloner le projet
@@ -43,7 +72,7 @@ $Env:OPENAI_API_KEY = "sk-..."
 
 ---
 
-## Lancer l’application
+## ▶️ Lancer l’application
 
 ```powershell
 streamlit run streamlit_app.py
@@ -53,7 +82,7 @@ L’interface s’ouvre dans votre navigateur. Posez une question pour interroge
 
 ---
 
-## Structure du projet
+## 🏗️ Structure du projet
 
 ```
 ragdocumentsearchproject/
@@ -74,7 +103,7 @@ ragdocumentsearchproject/
 
 ---
 
-## Configuration
+## ⚙️ Configuration
 
 Le fichier `src/config/config.py` centralise les réglages:
 - **LLM_MODEL** par défaut: `openai:gpt-4o`
@@ -85,7 +114,7 @@ Le LLM est instancié via LangChain `init_chat_model` et récupère la clé depu
 
 ---
 
-## Flux de bout en bout (Mermaid vertical)
+## 🔄 Flux de bout en bout (Mermaid vertical)
 
 ```mermaid
 flowchart TB
@@ -111,7 +140,7 @@ flowchart TB
 
 ---
 
-## Architecture des composants (Mermaid vertical)
+## 🧱 Architecture des composants (Mermaid vertical)
 
 ```mermaid
 flowchart TB
@@ -143,7 +172,7 @@ flowchart TB
 
 ---
 
-## Détails techniques
+## 🛠️ Détails techniques
 
 - **Ingestion**: `WebBaseLoader`, `PyPDFDirectoryLoader`, `TextLoader`
 - **Découpage**: `RecursiveCharacterTextSplitter` (via `CHUNK_SIZE`, `CHUNK_OVERLAP`)
@@ -152,11 +181,11 @@ flowchart TB
 - **Génération**: `llm.invoke(prompt)` avec un prompt contextuel minimaliste
 - **Orchestration**: `langgraph.StateGraph` avec nœuds `retriever` → `responder`
 
-Note: `nodes/reactnode.py` expose une variante agentique ReAct (`create_react_agent`) avec des Tools (`retriever`, `Wikipedia`).
+> Option avancée: `nodes/reactnode.py` expose une variante agentique ReAct (`create_react_agent`) avec des Tools (`retriever`, `Wikipedia`).
 
 ---
 
-## Personnaliser les sources
+## 🧩 Personnaliser les sources
 
 - **URLs**: modifier `DEFAULT_URLS` dans `src/config/config.py`
 - **PDF**: déposer vos fichiers dans `data/` (chargés automatiquement)
@@ -164,7 +193,7 @@ Note: `nodes/reactnode.py` expose une variante agentique ReAct (`create_react_ag
 
 ---
 
-## Conseils qualité & performance
+## ⚡ Conseils qualité & performance
 
 - Ajuster `CHUNK_SIZE`/`CHUNK_OVERLAP` selon la granularité souhaitée
 - Limiter la taille des PDF ou filtrer par pertinence
@@ -173,7 +202,7 @@ Note: `nodes/reactnode.py` expose une variante agentique ReAct (`create_react_ag
 
 ---
 
-## Dépannage rapide
+## 🆘 Dépannage rapide
 
 - Erreur « retriever not initialized »: vérifier l’appel à `create_retriever`
 - Clé API: s’assurer que `OPENAI_API_KEY` est bien défini
@@ -181,11 +210,15 @@ Note: `nodes/reactnode.py` expose une variante agentique ReAct (`create_react_ag
 
 ---
 
-## Licence
+## 📄 Licence
 MIT (adapter si besoin)
 
 ---
 
-<p align="center">
-  <img src="https://media.tenor.com/4Zx3f6G7W9gAAAAC/anime-stars.gif" alt="anime sparkle" width="480"/>
-</p>
+<div align="center">
+  <img src="https://media.tenor.com/4Zx3f6G7W9gAAAAC/anime-stars.gif" alt="anime sparkle" width="460"/>
+  <br/>
+  <img src="https://assets-global.website-files.com/5e4c6ab8b06f2b730b3b1bff/6298c0a0989ce5a34cba52d1_lottie-logo-animation.gif" alt="lottie" width="320"/>
+  <br/>
+  <sub>Made with ❤️ for delightful developer experiences.</sub>
+</div>
